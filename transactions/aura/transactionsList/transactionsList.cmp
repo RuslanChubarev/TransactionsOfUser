@@ -1,0 +1,10 @@
+<aura:component>
+    <aura:attribute name="transactions" type="Transaction__c[]"/>
+    <lightning:card title="Transactions">
+        <p class="slds-p-horizontal--small">
+            <aura:iteration items="{!v.transactions}" var="transaction">
+                <c:transactionItem transaction="{!transaction}"/>
+            </aura:iteration>
+        </p>
+    </lightning:card>
+</aura:component>

@@ -1,0 +1,58 @@
+<aura:component controller="TransactionsController" implements="flexipage:availableForAllPageTypes" access="global">
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <aura:handler event="force:showToast" action="{!c.handleToastEvent}"/>
+    <!-- Name of current user -->
+    <!-- For LIST -->
+    <aura:attribute name="transactions" type="Transaction__c[]"/>
+    <!-- For RECORD -->
+    <aura:attribute name="newTransaction" type="Transaction__c"
+         default="{ 'sobjectType': 'Transaction__c',
+                        'Name': '',
+                        'Amount__c': 0,
+                        'Date__c': ''}"/>
+	    
+    <lightning:layout>
+        <lightning:layoutItem padding="around-small" size="6">
+        <!-- CREATE NEW TRANSACTION -->
+            <div aria-labelledby="newtransactionform">
+                
+                <!-- BOXED AREA -->
+                <fieldset class="slds-box slds-theme--default slds-container--small">
+                <legend id="newtransactionform" class="slds-text-heading--small 
+                  slds-p-vertical--medium">
+                  Add transaction
+                </legend>
+                <!-- CREATE NEW TRANSACTION FORM -->
+                <form class="slds-form--stacked">          
+                    <lightning:input aura:id="transactionform" label="Transaction Name"
+                                     name="transactionname"
+                                     value="{!v.newTransaction.Name}"
+                                     required="true"/> 
+                    <lightning:input type="number" aura:id="transactionform" label="Amount"
+                                     name="transactionamount"
+                                     formatter="currency"
+                                     step="0.01"
+                                     value="{!v.newTransaction.Amount__c}"
+                                     messageWhenRangeUnderflow="Enter an amount of transaction"
+                                     required="true"/>                    
+                    <lightning:input type="date" aura:id="transactionform" label="Transaction Date"
+                                     name="transactiondate"
+                                     value="{!v.newTransaction.Date__c}"
+                                     required="true"/>                  
+                    <lightning:button label="Create Transaction" 
+                                      class="slds-m-top--medium"
+                                      variant="brand"
+                                      onclick="{!c.clickCreate}"/>
+                </form>
+                <!-- / CREATE NEW TRANSACTION FORM -->
+          
+              </fieldset>
+              <!-- / BOXED AREA -->
+            </div>
+            <!-- / CREATE NEW TRANSACTION -->
+        </lightning:layoutItem>
+    </lightning:layout>
+    <!-- / NEW TRANSACTION FORM -->
+    <c:BalanceOfUser/>
+    <c:transactionsList transactions="{!v.transactions}"/>
+</aura:component>

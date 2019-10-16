@@ -1,0 +1,16 @@
+<aura:component controller="UserController">
+	<aura:attribute name="user" type="User" 
+               default="{ 'sobjectType': 'User' }"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+     <lightning:layout>
+        <lightning:layoutItem padding="around-small" size="6">
+            <fieldset class="slds-box slds-theme--default slds-container--small">
+                        <legend id="newtransactionform" class="slds-text-heading--small 
+                          slds-p-vertical--medium">
+                          Your balance
+                        </legend>
+                		<lightning:formattedNumber value="{!v.user.Budget__c}" style="currency" class="slds-col slds-text-heading_large slds-p-horizontal_medium"/>    		
+            </fieldset>
+    	</lightning:layoutItem>
+    </lightning:layout>
+</aura:component>
