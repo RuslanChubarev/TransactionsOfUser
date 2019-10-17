@@ -13,6 +13,7 @@
         </p>
         <div class="slds-float--right slds-m-right_medium">
         <lightning:button variant="destructive" label="Delete record" title="Delete record" onclick="{! c.handleClick }"/>
+        <lightning:notificationsLibrary aura:id="notif"/>
         </div>
         <div class="slds-float--right slds-m-right_medium">
         <lightning:button variant="success"  label="Edit record" title="Edit record" onclick="{! c.editRecord }"/>

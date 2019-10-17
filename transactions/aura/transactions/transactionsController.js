@@ -19,13 +19,24 @@
 	clickCreate : function(component, event, helper) {
 		console.log('Create record');
         
+        //get name of transaction
+		var inputName = component.find("transactionname");
+        var valueOfName = inputName.get("v.value");
+		
+        //get amount of transaction
+        var inputAmount = component.find("transactionamount");
+        var valueOfAmount = inputAmount.get("v.value");
+        
+		//get date of transaction
+        var inputDate = component.find("transactiondate");
+        var valueOfDate = inputDate.get("v.value");
+        
         //getting the transaction information
         var mainTransaction = component.get("v.newTransaction");
-        
-        
+      
         //Calling the Apex Function
         var action = component.get("c.saveTransaction");
-        
+      
         //Setting the Apex Parameter
         action.setParams({
             "myTransaction" : mainTransaction
@@ -34,11 +45,9 @@
         //Setting the Callback
         action.setCallback(this,function(a){
             //get the response state
-            var state = a.getState();
-            
+            var state = a.getState();            
             //check if result is successfull
-            if(state == "SUCCESS"){
-                $A.get('e.force:refreshView').fire();
+            if(state == "SUCCESS" && valueOfName != '' && valueOfAmount != 0 && valueOfDate != null){
                 //Reset Form
                 var newTransaction = { 'sobjectType': 'Transaction__c',
                         'Name': '',
@@ -46,12 +55,23 @@
                         'Date__c': ''};
                 //resetting the Values in the form
                 component.set("v.newTransaction",newTransaction);
-                alert('Record is Created Successfully');
-            } else if(state == "ERROR"){
-                alert('Error in calling server side action');
+                component.find('successNotif').showNotice({
+            	"variant": "info",
+            	"header": "Success!",
+            	"message": "Record successfully added .",
+                closeCallback: function() {
+					$A.get('e.force:refreshView').fire();            	}
+       			 });                 
+            } else if(state == "ERROR" || valueOfName == '' || valueOfAmount == 0 || valueOfDate == null){
+                component.find('successNotif').showNotice({
+            	"variant": "error",
+            	"header": "Error!",
+            	"message": "Please, enter data in fields.",
+                closeCallback: function() {
+					$A.get('e.force:refreshView').fire();            	}
+       			 });
             }
         });
-        
 		//adds the server-side action to the queue        
         $A.enqueueAction(action);
     },

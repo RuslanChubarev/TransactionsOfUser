@@ -28,9 +28,14 @@
             
             //check if result is successfull
             if(state == "SUCCESS"){
-                $A.get('e.force:refreshView').fire();
-                //Reset Form
-                alert('Record is Deleted Successfully');
+                component.find('notif').showNotice({
+            	"variant": "info",
+            	"header": "Success!",
+            	"message": "Record successfully deleted .",
+                closeCallback: function() {
+					$A.get('e.force:refreshView').fire();            	
+                }
+       			});
             } else if(state == "ERROR"){
                 alert('Error in calling server side action');
             }

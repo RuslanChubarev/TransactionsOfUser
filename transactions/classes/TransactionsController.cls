@@ -13,6 +13,7 @@ public with sharing class TransactionsController {
     
     @AuraEnabled
     public static List<Transaction__c> getTransactions(Transaction__c myTransaction) {
-        return [SELECT Id, Name, Amount__c, Date__c FROM Transaction__c ORDER BY Date__c DESC];		
+        id userId =  UserInfo.getUserId();
+        return [SELECT Id, Name, Amount__c, Date__c FROM Transaction__c WHERE OwnerId = :userId ORDER BY Date__c DESC];		
     }
 }

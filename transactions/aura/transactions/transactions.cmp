@@ -24,21 +24,22 @@
                 </legend>
                 <!-- CREATE NEW TRANSACTION FORM -->
                 <form class="slds-form--stacked">          
-                    <lightning:input aura:id="transactionform" label="Transaction Name"
+                    <lightning:input aura:id="transactionname" label="Transaction Name"
                                      name="transactionname"
                                      value="{!v.newTransaction.Name}"
                                      required="true"/> 
-                    <lightning:input type="number" aura:id="transactionform" label="Amount"
+                    <lightning:input type="number" aura:id="transactionamount" label="Amount"
                                      name="transactionamount"
                                      formatter="currency"
                                      step="0.01"
                                      value="{!v.newTransaction.Amount__c}"
                                      messageWhenRangeUnderflow="Enter an amount of transaction"
                                      required="true"/>                    
-                    <lightning:input type="date" aura:id="transactionform" label="Transaction Date"
+                    <lightning:input type="date" aura:id="transactiondate" label="Transaction Date"
                                      name="transactiondate"
                                      value="{!v.newTransaction.Date__c}"
-                                     required="true"/>                  
+                                     required="true"/>
+                    <lightning:notificationsLibrary aura:id="successNotif"/>
                     <lightning:button label="Create Transaction" 
                                       class="slds-m-top--medium"
                                       variant="brand"
